@@ -1,0 +1,25 @@
+//delay variable
+int dt = 1000;
+String YourName;
+
+void setup() {
+  //setup code
+Serial.begin(9600);  
+}
+
+void loop() {
+//repeat code
+Serial.println("Hello World");
+Serial.println("What is your name?");
+
+while(Serial.available()==0){
+
+  
+}
+
+YourName=Serial.readString();
+Serial.print("Hello  ");
+Serial.print(YourName);
+Serial.println(" How are you? ");  
+delay(dt);
+}
