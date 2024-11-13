@@ -1,0 +1,56 @@
+// Pin setup for RGB LED (adjust as needed)
+const int redPin = 9;
+const int greenPin = 10;
+const int bluePin = 11;
+
+// RGB values for traffic light colors
+const int redColor[3] = {255, 0, 0};
+const int orangeColor[3] = {255, 165, 0};
+const int springGreenColor[3] = {0, 255, 127};
+
+void setup() {
+  // Initialize RGB pins as output
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+
+  // Start serial communication
+  Serial.begin(9600);
+}
+
+void loop() {
+  // RED LIGHT
+  setColor(redColor[0], redColor[1], redColor[2]);
+  Serial.println("Red Light ON for 5 seconds");
+  for (int i = 5; i > 0; i--) {
+    Serial.print("Red countdown: ");
+    Serial.println(i);
+    delay(1000);
+  }
+
+  // ORANGE LIGHT (blink 4 times, 1s each)
+  for (int i = 0; i < 4; i++) {
+    setColor(orangeColor[0], orangeColor[1], orangeColor[2]);
+    Serial.println("Orange Light ON");
+    delay(500); // ON for 0.5s
+    setColor(0, 0, 0); // Turn off LED
+    Serial.println("Orange Light OFF");
+    delay(500); // OFF for 0.5s
+  }
+
+  // SPRING GREEN LIGHT
+  setColor(springGreenColor[0], springGreenColor[1], springGreenColor[2]);
+  Serial.println("Spring Green Light ON for 5 seconds");
+  for (int i = 5; i > 0; i--) {
+    Serial.print("Spring Green countdown: ");
+    Serial.println(i);
+    delay(1000);
+  }
+}
+
+// Function to set RGB LED color
+void setColor(int red, int green, int blue) {
+  analogWrite(redPin, 255 - red);   // Invert color for common anode, use as is for common cathode
+  analogWrite(greenPin, 255 - green);
+  analogWrite(bluePin, 255 - blue);
+}
