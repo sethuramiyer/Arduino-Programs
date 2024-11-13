@@ -1,0 +1,42 @@
+//Lesson 5
+//Variable
+
+int redPin=6;
+int greenPin=5;
+int bluePin=3;
+
+int dtGreen=50;
+int dtBlue=50;
+int dtRed=50;
+
+int dt=100;
+
+
+
+void setup() {
+
+pinMode(redPin,OUTPUT);
+pinMode(greenPin,OUTPUT);
+pinMode(bluePin,OUTPUT);
+
+Serial.begin(9600);  
+}
+
+void loop() {
+
+Serial.print("Hello World");
+
+digitalWrite(greenPin,HIGH);
+delay(dtGreen);
+digitalWrite(greenPin,LOW);
+delay(dtGreen);  
+digitalWrite(bluePin,HIGH);
+delay(dtBlue);
+digitalWrite(bluePin,LOW);
+delay(dtBlue);    
+digitalWrite(redPin,HIGH);
+delay(dtRed);
+digitalWrite(redPin,LOW);
+delay(dtRed);
+  
+}
