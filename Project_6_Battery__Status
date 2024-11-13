@@ -1,0 +1,27 @@
+//variables
+
+int basePin=2;
+int numPins=5;
+int j;
+int dt=200;
+
+void setup() {
+
+for(j=basePin;j<basePin+numPins;j=j+1){
+    pinMode(j,OUTPUT);
+}  
+}
+
+void loop() {
+
+for(j=basePin;j<basePin+numPins;j=j+1){
+  digitalWrite(j,LOW);
+  delay(dt);
+}
+  for(j=basePin;j<basePin+numPins;j=j+1){
+  digitalWrite(j,HIGH);
+  delay(dt);
+
+    
+}
+}
