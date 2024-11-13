@@ -1,0 +1,52 @@
+//Lesson 5
+//Variable
+
+int redPin=6;
+int greenPin=5;
+int bluePin=3;
+
+int dtGreen=50;
+int dtBlue=50;
+int dtRed=50;
+
+int dt=100;
+String colourinput;
+
+
+void setup() {
+
+pinMode(redPin,OUTPUT);
+pinMode(greenPin,OUTPUT);
+pinMode(bluePin,OUTPUT);
+
+Serial.begin(9600);  
+}
+
+void loop() {
+
+Serial.print("What Colur do you want?");
+  while(Serial.available()==0){
+
+    
+  }
+colourinput=Serial.readString();
+
+  if(colourinput=="red"){
+    digitalWrite(redPin,HIGH);
+    digitalWrite(greenPin,LOW);
+    digitalWrite(bluePin,LOW);
+  }
+
+   if(colourinput=="green"){
+    digitalWrite(redPin,LOW);
+    digitalWrite(greenPin,HIGH);
+    digitalWrite(bluePin,LOW);
+      }
+
+   if(colourinput=="blue"){
+    digitalWrite(redPin,LOW);
+    digitalWrite(greenPin,LOW);
+    digitalWrite(bluePin,HIGH);
+      }
+}
+  
