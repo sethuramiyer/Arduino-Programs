@@ -1,19 +1,17 @@
-//P2  Dino Eye
-//Vari
+// P2 Dino Eye
+// Vari
 
-int ledPin=10;
-int dt=2000;
+int ledPin = 10; 
+int onDuration = 2500; 
+int offDuration = 1500; 
 
 void setup() {
-  
-pinMode  (ledPin,OUTPUT);
+    pinMode(ledPin, OUTPUT); 
 }
 
 void loop() {
-
-digitalWrite(ledPin,HIGH);
-delay(dt);
-digitalWrite(ledPin,LOW);
-delay(dt);  
-    
+    digitalWrite(ledPin, HIGH); 
+    delay(onDuration); 
+    digitalWrite(ledPin, LOW); 
+    delay(offDuration); 
 }
