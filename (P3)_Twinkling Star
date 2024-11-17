@@ -1,1 +1,25 @@
+int bluePin = 5;
+int dt = 10;
+int value;
+
+
+
+void setup() {
+
+pinMode(bluePin,OUTPUT);
+  
+}
+
+void loop() {
+
+for(value=0;value<255;value=value+1){
+  analogWrite(bluePin,value);
+  delay(dt);    
+}
+
+for(value=255;value>0;value=value-1){
+  analogWrite(bluePin,value);
+  delay(dt);
+}
+}
 
