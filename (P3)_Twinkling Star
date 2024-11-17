@@ -10,12 +10,10 @@ pinMode(bluePin,OUTPUT);
   
 }
 
-void loop() {
-// For hands-on activity change value+1 to 5
-
-for(value=0;value<255;value=value+1){
-  analogWrite(bluePin,value);
-  delay(dt);    
+void loop() { 
+for(value=0;value<255;value=value+5){ 
+  analogWrite(bluePin,value); 
+  delay(dt);     
 }
 
 for(value=255;value>0;value=value-1){
