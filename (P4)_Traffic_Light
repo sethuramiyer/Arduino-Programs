@@ -1,0 +1,34 @@
+//Lesson 4
+int greenPin=5;
+int orangePin=7;
+int redPin=9;
+
+int dtgreen=5000;
+int dtorange=2000;
+int dtred=5000;
+
+int value;
+
+void setup() {
+  
+pinMode(greenPin,OUTPUT);
+pinMode(orangePin,OUTPUT);
+pinMode(redPin,OUTPUT);
+}
+
+void loop() {
+
+digitalWrite(greenPin,HIGH);
+  delay(dtgreen);
+digitalWrite(greenPin,LOW);
+for(value=0;value<3;value=value+1){
+  delay(dtorange);
+  digitalWrite(orangePin,HIGH);
+  delay(dtorange);
+  digitalWrite(orangePin,LOW);
+  delay(dtorange);
+  }  
+  digitalWrite(redPin,HIGH);
+  delay(dtred);
+  digitalWrite(redPin,LOW);
+}
