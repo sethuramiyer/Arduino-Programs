@@ -1,0 +1,68 @@
+// Pin Definitions
+const int tiltSwitchPin = 2;    // Tilt switch input pin
+const int buzzerPin = 3;        // Passive buzzer pin
+const int ledPins[] = {4, 5, 6, 7, 8, 9, 10, 11}; // LEDs for binary counter (up to 8 bits)
+
+// Variables
+int counter = 0;                // Decimal counter
+bool isTiltOn = false;          // Tracks tilt switch state
+
+void setup() {
+  pinMode(tiltSwitchPin, INPUT_PULLDOWN); // Configure tilt switch pin with pull-down
+  pinMode(buzzerPin, OUTPUT);             // Configure buzzer pin as output
+  
+  // Set all LED pins as outputs
+  for (int i = 0; i < 8; i++) {
+    pinMode(ledPins[i], OUTPUT);
+  }
+  
+  Serial.begin(9600); // Initialize serial communication
+}
+
+void loop() {
+  // Read tilt switch state
+  bool tiltState = digitalRead(tiltSwitchPin);
+
+  if (tiltState) { // If tilt switch is ON
+    if (!isTiltOn) {
+      isTiltOn = true; // Update state
+    }
+    counter++; // Increment counter
+    updateBinaryCounter(counter); // Update LEDs for binary counter
+    
+    Serial.print("Counter: ");
+    Serial.println(counter); // Print counter value to serial monitor
+    
+    // Sound buzzer on multiples of 10
+    if (counter % 10 == 0) {
+      playThreeToneAlert();
+    }
+    
+    // Reset counter at 250
+    if (counter >= 250) {
+      counter = 0;
+    }
+    
+    delay(1000); // Delay for 1 second
+  } else {
+    isTiltOn = false; // Update state if tilt switch is OFF
+  }
+}
+
+// Function to update binary counter using LEDs
+void updateBinaryCounter(int value) {
+  for (int i = 0; i < 8; i++) {
+    digitalWrite(ledPins[i], (value >> i) & 0x01);
+  }
+}
+
+// Function to play a three-tone alert on the buzzer
+void playThreeToneAlert() {
+  tone(buzzerPin, 500, 200); // Play 500 Hz for 200 ms
+  delay(250);                // Delay between tones
+  tone(buzzerPin, 700, 200); // Play 700 Hz for 200 ms
+  delay(250); 
+  tone(buzzerPin, 900, 200); // Play 900 Hz for 200 ms
+  delay(250); 
+  noTone(buzzerPin);         // Turn off the buzzer
+}
