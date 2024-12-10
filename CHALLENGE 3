@@ -1,0 +1,85 @@
+// Pin Definitions
+const int PIR_PIN = 2;
+const int BUZZER_PIN = 3;
+const int BUTTON_PIN = 4;
+
+// Global Variables
+bool alarmTriggered = false;
+unsigned long resetTime = 0;
+
+// 8x8 Display
+Adafruit_8x8matrix matrix = Adafruit_8x8matrix();
+
+// Triangle and Exclamation Point
+uint8_t redTriangle[8] = {
+  0b00000000,
+  0b00111000,
+  0b01111100,
+  0b11111110,
+  0b11111110,
+  0b01111100,
+  0b00111000,
+  0b00000000
+};
+
+uint8_t exclamationPoint[8] = {
+  0b00000000,
+  0b00011000,
+  0b00011000,
+  0b00011000,
+  0b00011000,
+  0b00000000,
+  0b00011000,
+  0b00000000
+};
+
+void setup() {
+  // PIR and Button
+  pinMode(PIR_PIN, INPUT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+  // Buzzer
+  pinMode(BUZZER_PIN, OUTPUT);
+
+  // Initialize 8x8 Display
+  matrix.begin(0x70);  // Default I2C address
+  matrix.clear();
+  matrix.writeDisplay();
+}
+
+void loop() {
+  // Reset Logic
+  if (digitalRead(BUTTON_PIN) == LOW) {
+    resetTime = millis() + 15000;  // 15-second reset period
+    alarmTriggered = false;
+    matrix.clear();
+    matrix.writeDisplay();
+  }
+
+  // Skip PIR if reset is active
+  if (millis() < resetTime) return;
+
+  // Check PIR sensor
+  if (digitalRead(PIR_PIN) == HIGH && !alarmTriggered) {
+    alarmTriggered = true;
+    triggerAlarm();
+  }
+}
+
+void triggerAlarm() {
+  // Sound Buzzer
+  for (int i = 0; i < 10; i++) {  // Two-tone sound
+    tone(BUZZER_PIN, 1000, 100);
+    delay(200);
+    tone(BUZZER_PIN, 1500, 100);
+    delay(200);
+  }
+  noTone(BUZZER_PIN);
+
+  // Display Triangle with Exclamation Point
+  matrix.clear();
+  for (int i = 0; i < 8; i++) {
+    matrix.displaybuffer[i] = redTriangle[i] | exclamationPoint[i];
+  }
+  matrix.writeDisplay();
+}
